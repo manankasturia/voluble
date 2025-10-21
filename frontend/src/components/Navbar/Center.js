@@ -31,19 +31,19 @@ const Center = () => {
                 <div className="bg-white shadow-lg rounded-md py-2 min-w-[200px]">
                   <a
                     href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                    className="block px-4 py-4 hover:bg-gray-100 transition-colors"
                   >
                     Feature 1
                   </a>
                   <a
                     href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                    className="block px-4 py-4 hover:bg-gray-100 transition-colors"
                   >
                     Feature 2
                   </a>
                   <a
                     href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                    className="block px-4 py-4 hover:bg-gray-100 transition-colors"
                   >
                     Feature 3
                   </a>
