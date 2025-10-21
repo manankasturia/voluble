@@ -15,7 +15,7 @@ const Left = () => {
 
               <button className='self-start bg-blue-500 w-[300px] text-white px-3 py-3 my-10 rounded-lg font-bold text-lg flex justify-center items-center
     hover:bg-blue-600 hover:text-white transition duration-300 text-2xl'>
-    Try Voluble for <p className='font-bold text-black text-3xl ml-2'>Free</p>
+    Try Voluble for <p className='font-bold text-black text-2xl ml-2'>Free</p>
 </button>
 </div>
   )
