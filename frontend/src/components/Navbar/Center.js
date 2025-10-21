@@ -13,7 +13,7 @@ const Center = () => {
     <div className="w-full">
       <ul className="flex flex-row justify-center items-center list-none w-full gap-10 cursor-pointer">
         <li
-          className="bg-white font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out relative"
+          className=" font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out relative"
           onMouseEnter={() => setShowDropdown(true)}
           onMouseLeave={() => setShowDropdown(false)}
         >
@@ -52,13 +52,13 @@ const Center = () => {
             )}
           </AnimatePresence>
         </li>
-        <li className="bg-white font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
+        <li className="font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
           Use Cases
         </li>
-        <li className="bg-white font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
+        <li className="font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
           Pricing
         </li>
-        <li className="bg-white font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
+        <li className=" font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
           About
         </li>
       </ul>
