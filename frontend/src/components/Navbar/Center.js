@@ -21,7 +21,7 @@ const Center = () => {
           <AnimatePresence>
             {showDropdown && (
               <motion.div
-                className="absolute top-full left-0 pt-2 z-50"
+                className="absolute top-10 left-0 pt-2 z-10 "
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
