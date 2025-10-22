@@ -100,9 +100,7 @@ const Right = ({ currentSlide }) => {
             : 'opacity-0 pointer-events-none'
         }`}
       >
-        <button className=" bg-blue-300 text-black border-black font-bold py-4 px-6 rounded-lg shadow-lg hover:bg-blue-700  hover:text-white transition-colors text-lg">
-          Try Voluble Now
-        </button>
+       
       </div>
 
     </div>
