@@ -2,8 +2,13 @@ import React from 'react'
 import Left from './Left.js'
 import Right from './Right.js'
 import Navbar from '../Navbar/Navbar.js'
+import Tagline from '../Benefits/Tagline.js'
+import Card from '../Benefits/Card.js'
+import Benefits from '../Benefits/Benefits.js'
+import Work from '../Work/Work.js'
 const Landing = () => {
   return (
+    <>
     <div className='w-full h-screen '>
       <svg
   className="absolute top-0 left-0 w-full h-screen -z-10"
@@ -51,6 +56,14 @@ const Landing = () => {
         </div>
         
     </div>
+
+    <Tagline/>
+    <Benefits/>
+    <Work/>
+
+
+    
+    </>
   )
 }
 
