@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Center = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -53,7 +54,7 @@ const Center = () => {
           </AnimatePresence>
         </li>
         <li className="font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
-          Use Cases
+          <Link to="/usecases">Use Cases</Link>
         </li>
         <li className="font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
           Pricing
