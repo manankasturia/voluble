@@ -6,6 +6,7 @@ import Tagline from '../Benefits/Tagline.js'
 import Card from '../Benefits/Card.js'
 import Benefits from '../Benefits/Benefits.js'
 import Work from '../Work/Work.js'
+import Footer from '../Footer/Footer.js'
 const Landing = () => {
   return (
     <>
@@ -60,6 +61,7 @@ const Landing = () => {
     <Tagline/>
     <Benefits/>
     <Work/>
+    <Footer/>
 
 
     
