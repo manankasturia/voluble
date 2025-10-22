@@ -1,18 +1,12 @@
 import React from 'react'
 import Scrollingsection from './Scrollingsection.js'
+
 const Work = () => {
   return (
-    <div >
+    <div>
       <h1 className='text-6xl text-center pt-10 pb-10 font-bold '>How Voluble AI Roleplays work</h1>
-      <div className="absolute h-screen w-full">
-        
-
-      <div>
-      
-      
       <Scrollingsection />
-    </div>
-      </div>
+      
     </div>
   )
 }

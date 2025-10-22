@@ -1,6 +1,5 @@
 import React from 'react';
 
-// --- Define the content for all 4 slides ---
 const slideContent = [
   { 
     id: 0, 
@@ -41,21 +40,17 @@ const slideContent = [
 ];
 
 
-// We accept the `currentSlide` prop from Scrollingsection.js
 const Right = ({ currentSlide }) => {
   return (
-    // We need overflow-visible for the -left-10 cards
+
     <div className="h-screen w-[50%] relative overflow-visible">
       
-      {/* === 1. ADDED STEP INDICATORS === */}
-      {/* This sits above the centered card. It's aligned using the same -left-10 and w-4/5 */}
       <div className="absolute top-1/2 -mt-40 -left-10 w-4/5 flex items-center space-x-2 px-10">
         {slideContent.map((_, index) => (
           <div
             key={`bar-${index}`}
-            // This creates 4 equal-width bars
+
             className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-              // The active bar is blue, others are gray
               currentSlide === index ? 'bg-blue-600' : 'bg-gray-300'
             }`}
           />
@@ -63,7 +58,7 @@ const Right = ({ currentSlide }) => {
       </div>
 
 
-      {/* === 2. YOUR SLIDING CARDS === */}
+
       {slideContent.map((slide, index) => {
         
         const position = index - currentSlide;
@@ -92,7 +87,6 @@ const Right = ({ currentSlide }) => {
         );
       })}
 
-      {/* === 3. YOUR BUTTON (fades in on last slide) === */}
       <div 
         className={`absolute bottom-32 -left-10 w-4/5 transition-opacity duration-500 ease-in-out ${
           currentSlide === slideContent.length - 1 
@@ -100,7 +94,9 @@ const Right = ({ currentSlide }) => {
             : 'opacity-0 pointer-events-none'
         }`}
       >
-       
+        <button className=" bg-blue-300 text-indigo-900 border-black font-bold py-4 px-6 rounded-lg shadow-lg hover:bg-blue-700  hover:text-white transition-colors text-lg">
+          Try Voluble Now
+        </button>
       </div>
 
     </div>
