@@ -57,10 +57,10 @@ const Center = () => {
           <Link to="/usecases">Use Cases</Link>
         </li>
         <li className="font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
-          Pricing
+          <Link to="/pricing">Pricing</Link>
         </li>
         <li className=" font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
-          About
+          <Link to="about">About</Link>
         </li>
       </ul>
     </div>
