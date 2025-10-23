@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Navbar/Navbar.js";
 import Card from "./Card.js";
+import Footer from "../Footer/Footer.js";
 
 const Pricing = () => {
   const pricingPlans = [
@@ -30,23 +31,26 @@ const Pricing = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col items-center min-h-screen bg-violet-50">
-      <Navbar />
-      <h1 className="text-5xl font-bold text-indigo-900 mt-12 mb-8">
-        Find the Perfect Plan for Your Voice
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 py-6 max-w-6xl">
-        {pricingPlans.map((plan, index) => (
-          <Card
-            key={index}
-            pack={plan.pack}
-            price={plan.price}
-            btnLabel={plan.btnLabel}
-            features={plan.features}
-          />
-        ))}
+    <>
+      <div className="w-full flex flex-col items-center min-h-screen bg-violet-50">
+        <Navbar />
+        <h1 className="text-5xl font-bold text-indigo-900 mt-12 mb-8">
+          Find the Perfect Plan for Your Voice
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-4 py-6 max-w-6xl">
+          {pricingPlans.map((plan, index) => (
+            <Card
+              key={index}
+              pack={plan.pack}
+              price={plan.price}
+              btnLabel={plan.btnLabel}
+              features={plan.features}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
