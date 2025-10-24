@@ -60,7 +60,7 @@ const Center = () => {
           <Link to="/pricing">Pricing</Link>
         </li>
         <li className=" font-medium hover:text-blue-600 hover:font-bold transition-all duration-300 ease-in-out">
-          <Link to="about">About</Link>
+          <Link to="/about">About</Link>
         </li>
       </ul>
     </div>
