@@ -12,12 +12,12 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDJcOx2mj_1uw3whmJBG1YRF8bKu-59nqg",
-  authDomain: "voluble-ai.firebaseapp.com",
-  projectId: "voluble-ai",
-  storageBucket: "voluble-ai.firebasestorage.app",
-  messagingSenderId: "988298496368",
-  appId: "1:988298496368:web:9aa25351ceb214a5ad27b5",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
