@@ -35,7 +35,7 @@ const Right = () => {
         <div className="flex items-center gap-2">
           <Link
             to="/signin"
-            className="text-md font-medium hover:text-blue-600 px-3 py-2 rounded-md"
+            className="text-lg font-medium hover:text-blue-600 px-3 py-2 transition duration-300"
           >
             Login
           </Link>
