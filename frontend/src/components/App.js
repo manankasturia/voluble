@@ -5,7 +5,8 @@ import Landing from "./Landing/Landing.js";
 import UseCases from "./UseCases/UseCases.js";
 import Pricing from "./Pricing/Pricing.js";
 import About from "./About/About.js";
-import Login from "./Login/Login.js";
+import SignUp from "./Auth/SignUp.js";
+import SignIn from "./Auth/SignIn.js";
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
         <Route path="/usecases" element={<UseCases />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
       </Routes>
     </Router>
   );
