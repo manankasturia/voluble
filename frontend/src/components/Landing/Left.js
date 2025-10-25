@@ -1,7 +1,10 @@
 import React from "react";
 import { RotateWords } from "../templates/rotate-words.js";
+import { useNavigate } from "react-router-dom";
 
 const Left = () => {
+  const navigate = useNavigate();
+
   return (
     <div className=" h-full w-[60%] flex flex-col justify-center items-center pl-12">
       <h1 className="text-black text-8xl font-bold">
@@ -16,6 +19,7 @@ const Left = () => {
       </p>
 
       <button
+        onClick={() => navigate("/signup")}
         className="self-start bg-blue-500 w-[300px] text-white px-3 py-3 my-10 rounded-lg font-bold text-lg flex justify-center items-center
     hover:bg-indigo-600 hover:text-white transition duration-300 text-2xl"
       >
