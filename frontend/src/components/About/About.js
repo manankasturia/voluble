@@ -1,36 +1,24 @@
 import React from 'react';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-// --- You can change your project name here ---
 const PROJECT_NAME = "Voluble";
-// ------------------------------------------
 
 const About = () => {
   return (
     <div className="">
       <Navbar />
 
-      {/*
-        This is the recommended wrapper.
-        - max-w-4xl: Sets a max-width of 896px. (You can use 5xl, 6xl, etc.)
-        - mx-auto: Centers the content.
-        - px-4: Adds padding on the sides for mobile.
-        - py-8: Adds vertical padding from the navbar.
-      */}
       <main className="max-w-4xl mx-auto px-4 py-8">
         <header className="text-center border-b-2 border-gray-100 pb-5 mb-8">
           <h2 className="text-4xl font-bold text-gray-900">
             About {PROJECT_NAME}
           </h2>
         </header>
-
-        {/* The inner div no longer needs any padding classes */}
         <div>
           <div className="mb-10">
             <h3 className="text-3xl font-semibold text-blue-600 mb-4 border-b border-gray-200 pb-2">
               Our Mission: Unlock Your Most Confident Voice
             </h3>
-            {/* ... rest of your content ... */}
             <p className="text-lg mb-4 text-gray-700">
               We believe that great ideas deserve to be heard clearly. But for most
               of us, public speaking is a skill shrouded in mystery. We finish a
@@ -56,7 +44,6 @@ const About = () => {
             </p>
           </div>
           
-          {/* ... all your other content sections ... */}
 
           <div className="mb-10">
             <h3 className="text-3xl font-semibold text-blue-600 mb-4 border-b border-gray-200 pb-2">
