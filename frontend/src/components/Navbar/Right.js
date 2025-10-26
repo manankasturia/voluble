@@ -26,7 +26,9 @@ const Right = () => {
           </div>
           <button
             onClick={handleSignOut}
-            className="w-40 px-1 py-1 my-4 rounded-lg bg-gray-200 text-lg hover:bg-red-500 hover:text-white border border-gray-300 transition duration-300"
+            className="w-40 px-3 py-3 my-4 rounded-lg font-bold bg-blue-300 text-blue-700 text-lg 
+        hover:bg-blue-600 hover:text-white transition duration-300
+        "
           >
             Sign Out
           </button>
