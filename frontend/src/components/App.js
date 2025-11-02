@@ -7,6 +7,7 @@ import Pricing from "./Pricing/Pricing.js";
 import About from "./About/About.js";
 import SignUp from "./Auth/SignUp.js";
 import SignIn from "./Auth/SignIn.js";
+import AudioAnalyzer from "./AudioAnalyzer/AudioAnalyzer.js";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/analyzer" element={<AudioAnalyzer />} />
       </Routes>
     </Router>
   );
