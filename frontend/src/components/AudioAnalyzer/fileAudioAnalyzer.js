@@ -115,11 +115,11 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
   }
 
   console.log("pauses: ", pauses);
-  console.log("pitches: ", pitches);
-  console.log("amplitudes: ", amplitudes);
-  console.log("energies: ", energies);
+  console.log("pitches: ", downsampleData(pitches, hopSeconds, 250));
+  console.log("amplitudes: ", downsampleData(amplitudes, hopSeconds, 250));
+  console.log("energies: ", downsampleData(energies, hopSeconds, 250));
 
-  sendData(pitches, energies, pauses);
+  sendData(pitches, energies, pauses, hopSeconds);
 
   return {
     sampleRate,
@@ -141,10 +141,34 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
   };
 }
 
-async function sendData(pitches, energiesDb, pauses) {
+function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
+  const bucketSizeInSeconds = bucketMs / 1000;
+  const framesPerBucket = Math.round(bucketSizeInSeconds / hopSeconds);
+
+  const downsampledArray = [];
+
+  for (let i = 0; i < dataArray.length; i += framesPerBucket) {
+    const chunk = dataArray.slice(i, i + framesPerBucket);
+
+    // Filter out nulls (for pitch) and invalid numbers
+    const validData = chunk.filter((val) => val !== null && !isNaN(val));
+
+    if (validData.length === 0) {
+      downsampledArray.push(null); // or 0 for volume
+    } else {
+      // Calculate the average for this bucket
+      const sum = validData.reduce((a, b) => a + b, 0);
+      downsampledArray.push(sum / validData.length);
+    }
+  }
+
+  return downsampledArray;
+}
+
+async function sendData(pitches, energiesDb, pauses, hopSeconds) {
   const data = {
-    pitchHz: pitches,
-    volume: energiesDb,
+    pitchHz: downsampleData(pitches, hopSeconds, 250),
+    volume: downsampleData(energiesDb, hopSeconds, 250),
     pauses: pauses,
   };
 
