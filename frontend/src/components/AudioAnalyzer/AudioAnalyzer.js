@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Pitchfinder from "pitchfinder";
+import { analyzeArrayBuffer } from "./fileAudioAnalyzer.js";
 
 const AudioAnalyzer = () => {
   const [volume, setVolume] = useState(0);
   const [pauseCount, setPauseCount] = useState(0);
   const [monotoneScore, setMonotoneScore] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
+  const [fileResult, setFileResult] = useState(null);
 
   const audioContextRef = useRef(null);
   const analyserRef = useRef(null);
@@ -163,10 +165,59 @@ const AudioAnalyzer = () => {
     return Math.sqrt(variance);
   };
 
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const arr = await file.arrayBuffer();
+      const result = await analyzeArrayBuffer(arr, {
+        energyThresholdDb: -50,
+        minPauseMs: 1000,
+        frameSize: 2048,
+        hopSize: 512,
+      });
+      setFileResult({ fileName: file.name, ...result });
+    } catch (err) {
+      console.error("File analysis failed:", err);
+      alert("Could not analyze this file.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
       <div className="bg-white rounded-xl shadow-lg p-8 max-w-md w-full">
         <h1 className="text-2xl font-bold mb-6 text-center">Audio Analyzer</h1>
+
+        {/* Upload and analyze (offline) */}
+        <div className="mb-6 space-y-3">
+          <label className="block text-sm font-medium">
+            Analyze prerecorded audio
+          </label>
+          <input
+            type="file"
+            accept="audio/wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/ogg,audio/webm"
+            onChange={handleFile}
+            className="block w-full text-sm text-gray-700"
+          />
+          {fileResult && (
+            <div className="mt-3 text-sm text-gray-800 space-y-1">
+              <div className="font-semibold">{fileResult.fileName}</div>
+              <div>Duration: {fileResult.durationSec.toFixed(1)} s</div>
+              <div>
+                Pauses: {fileResult.metrics.pausesCount} (avg{" "}
+                {fileResult.metrics.avgPauseMs.toFixed(0)} ms)
+              </div>
+              <div>
+                Mean pitch:{" "}
+                {fileResult.metrics.meanPitch
+                  ? fileResult.metrics.meanPitch.toFixed(1) + " Hz"
+                  : "—"}
+              </div>
+              <div>Pitch stdev: {fileResult.metrics.pitchStd.toFixed(1)}</div>
+              <div>Jitter: {fileResult.metrics.jitter.toFixed(3)}</div>
+            </div>
+          )}
+        </div>
 
         <div className="space-y-4 mb-6">
           {/* Volume Meter */}
