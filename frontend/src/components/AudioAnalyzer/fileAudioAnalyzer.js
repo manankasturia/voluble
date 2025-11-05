@@ -80,8 +80,10 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
     } else if (currentStart !== null) {
       const span = i - currentStart;
       if (span >= minPauseFrames) {
+        const startMs = currentStart * hopSeconds * 1000;
+        const endMs = (i - 1) * hopSeconds * 1000;
         const durationMs = span * hopSeconds * 1000;
-        pauses.push({ startFrame: currentStart, endFrame: i - 1, durationMs });
+        pauses.push({ startMs, endMs, durationMs });
       }
       currentStart = null;
     }
@@ -90,11 +92,10 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
   if (currentStart !== null) {
     const span = energies.length - currentStart;
     if (span >= minPauseFrames) {
-      pauses.push({
-        startFrame: currentStart,
-        endFrame: energies.length - 1,
-        durationMs: span * hopSeconds * 1000,
-      });
+      const startMs = currentStart * hopSeconds * 1000;
+      const endMs = (energies.length - 1) * hopSeconds * 1000;
+      const durationMs = span * hopSeconds * 1000;
+      pauses.push({ startMs, endMs, durationMs });
     }
   }
 
@@ -114,12 +115,23 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
     jitter = sum / (voiced.length - 1) / meanPitch;
   }
 
-  console.log("pauses: ", pauses);
-  console.log("pitches: ", downsampleData(pitches, hopSeconds, 250));
-  console.log("amplitudes: ", downsampleData(amplitudes, hopSeconds, 250));
-  console.log("energies: ", downsampleData(energies, hopSeconds, 250));
+  const metrics = {
+    pausesCount: pauses.length,
+    avgPauseMs: pauses.length
+      ? pauses.reduce((s, p) => s + p.durationMs, 0) / pauses.length
+      : 0,
+    meanPitch,
+    pitchStd,
+    jitter,
+  };
 
-  sendData(pitches, energies, pauses, hopSeconds);
+  console.log("pauses: ", pauses);
+  console.log("pitches: ", downsampleData(pitches, hopSeconds));
+  console.log("amplitudes: ", downsampleData(amplitudes, hopSeconds));
+  console.log("energies: ", downsampleData(energies, hopSeconds));
+  console.log("metrics: ", metrics);
+
+  sendData(pitches, energies, pauses, amplitudes, metrics, hopSeconds);
 
   return {
     sampleRate,
@@ -129,15 +141,7 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
     energiesDb: energies,
     pitchesHz: pitches,
     pauses,
-    metrics: {
-      pausesCount: pauses.length,
-      avgPauseMs: pauses.length
-        ? pauses.reduce((s, p) => s + p.durationMs, 0) / pauses.length
-        : 0,
-      meanPitch,
-      pitchStd,
-      jitter,
-    },
+    metrics,
   };
 }
 
@@ -165,11 +169,20 @@ function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
   return downsampledArray;
 }
 
-async function sendData(pitches, energiesDb, pauses, hopSeconds) {
+async function sendData(
+  pitches,
+  energiesDb,
+  pauses,
+  amplitudes,
+  metrics,
+  hopSeconds
+) {
   const data = {
     pitchHz: downsampleData(pitches, hopSeconds, 250),
     volume: downsampleData(energiesDb, hopSeconds, 250),
+    amplitudes: downsampleData(amplitudes, hopSeconds, 250),
     pauses: pauses,
+    metrics: metrics,
   };
 
   try {
