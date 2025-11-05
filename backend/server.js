@@ -12,8 +12,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/transcript", (req, res) => {
-  const { pitchHz, volume, pauses } = req.body;
-  console.log("Received data: ", { pitchHz, volume, pauses });
+  const { pitchHz, volume, amplitudes, pauses, metrics } = req.body;
+  console.log("Received data: ", {
+    pitchHz,
+    volume,
+    amplitudes,
+    pauses,
+    metrics,
+  });
   res.json({ success: true, message: "Data received successfully" });
 });
 
