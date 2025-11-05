@@ -138,8 +138,9 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
     frameSize: options.frameSize,
     hopSize: options.hopSize,
     durationSec,
-    energiesDb: energies,
-    pitchesHz: pitches,
+    energiesDb: downsampleData(energies, hopSeconds),
+    pitchesHz: downsampleData(pitches, hopSeconds),
+    amplitudes: downsampleData(amplitudes, hopSeconds),
     pauses,
     metrics,
   };
