@@ -1,7 +1,8 @@
 import express from 'express';
 const router = express.Router();
-import { getdata ,getTranscription} from '../../Controllers/assemblyAIController.js';
-import { combineData } from '../../Controllers/dataCombiner.js';
+import { getdata ,getTranscription} from '../controllers/assemblyAIController.js';
+import { combineData } from '../controllers/dataCombiner.js';
+import { getGeminiAnalysis } from '../controllers/geminiService.js';
 router.post('/getVolumeParams', async (req, res) => {
   try {
     const { pitchHz, volume, amplitudes, pauses, metrics } = req.body;
@@ -13,9 +14,9 @@ router.post('/getVolumeParams', async (req, res) => {
 
 
     const userAudioData = combineData(assemblyData, volumeData);
-
-
-    res.json({ success: true, data: userAudioData });
+    const geminiAnalysis = await getGeminiAnalysis(userAudioData);
+    console.log("Gemini analysis received.");
+    res.json({ success: true, analysis: geminiAnalysis });
   } catch (error) {
     console.error("Internal Server Error in /getVolumeParams:", error.message);
     
