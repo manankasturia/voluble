@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import volumeParams from './Routes/frontendRoutes/volumeParams.js';
+import volumeParams from './Routes/volumeParams.js';
 const port = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
