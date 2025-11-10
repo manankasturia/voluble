@@ -194,7 +194,7 @@ const ClarityContent = ({ clarity }) => (
   <div>
     <h3 className="text-2xl font-bold mb-4">Clarity</h3>
     {clarity ? (
-      <p className="text-gray-700 leading-relaxed text-md">{clarity}</p>
+      <p className="text-gray-700 leading-relaxed">{clarity}</p>
     ) : (
       <p className="text-gray-600">Speech clarity metrics will appear here.</p>
     )}
