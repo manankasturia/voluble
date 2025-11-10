@@ -27,13 +27,13 @@ function stddev(arr) {
   return Math.sqrt(variance);
 }
 
-export async function analyzeArrayBuffer(arrayBuffer, opts = {}) {
+export async function analyzeArrayBuffer(arrayBuffer, opts = {}, audioURL) {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-  return analyzeAudioBuffer(audioBuffer, opts);
+  return analyzeAudioBuffer(audioBuffer, opts, audioURL);
 }
 
-export function analyzeAudioBuffer(audioBuffer, opts = {}) {
+export async function analyzeAudioBuffer(audioBuffer, opts = {}, audioURL) {
   const options = { ...defaultOpts, ...opts };
   const sampleRate = audioBuffer.sampleRate;
   const detectPitch = YIN({
@@ -131,19 +131,17 @@ export function analyzeAudioBuffer(audioBuffer, opts = {}) {
   console.log("energies: ", downsampleData(energies, hopSeconds));
   console.log("metrics: ", metrics);
 
-  sendData(pitches, energies, pauses, amplitudes, metrics, hopSeconds);
-
-  return {
-    sampleRate,
-    frameSize: options.frameSize,
-    hopSize: options.hopSize,
-    durationSec,
-    energiesDb: downsampleData(energies, hopSeconds),
-    pitchesHz: downsampleData(pitches, hopSeconds),
-    amplitudes: downsampleData(amplitudes, hopSeconds),
+  const geminiAnalysis = await sendData(
+    audioURL,
+    pitches,
+    energies,
     pauses,
+    amplitudes,
     metrics,
-  };
+    hopSeconds
+  );
+
+  return { geminiAnalysis, energies };
 }
 
 function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
@@ -171,32 +169,38 @@ function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
 }
 
 async function sendData(
+  audioURL,
   pitches,
-  energiesDb,
+  energies,
   pauses,
   amplitudes,
   metrics,
   hopSeconds
 ) {
   const data = {
+    audioURL: audioURL,
     pitchHz: downsampleData(pitches, hopSeconds, 250),
-    volume: downsampleData(energiesDb, hopSeconds, 250),
+    volume: downsampleData(energies, hopSeconds, 250),
     amplitudes: downsampleData(amplitudes, hopSeconds, 250),
     pauses: pauses,
     metrics: metrics,
   };
 
   try {
-    const response = await fetch("http://localhost:8080/transcript", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      "http://localhost:8080/frontend/getVolumeParams",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await response.json();
     console.log("Data sent successfully: ", result);
+    return result;
   } catch (error) {
     console.error("Error sending data: ", error);
   }

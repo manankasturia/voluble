@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("transcript");
   const [audioFile, setAudioFile] = useState(null);
   const [analysisResult, setAnalysisResult] = useState(null);
+  const [energies, setEnergies] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [aiReview, setAiReview] = useState("");
@@ -20,22 +21,47 @@ const Dashboard = () => {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file) {
+      alert("File not uploaded.");
+      return;
+    }
 
     setAudioFile(file);
     setIsAnalyzing(true);
 
     try {
-      const arrayBuffer = await file.arrayBuffer();
-      const result = await analyzeArrayBuffer(arrayBuffer, {
-        energyThresholdDb: -50,
-        minPauseMs: 1000,
-        frameSize: 2048,
-        hopSize: 512,
+      const formData = new FormData();
+      formData.append("audio", file);
+
+      const uploadResponse = await fetch("http://localhost:8080/upload", {
+        method: "POST",
+        body: formData,
       });
-      setAnalysisResult(result);
-      setTranscript("Transcription would be generated here.");
-      setAiReview("AI review would be generated here.");
+      const uploadData = await uploadResponse.json();
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.message || "Upload failed");
+      }
+      const audioURL = uploadData.fileUrl;
+      console.log("File uploaded successfully: ", audioURL);
+
+      const arrayBuffer = await file.arrayBuffer();
+      const finalResult = await analyzeArrayBuffer(
+        arrayBuffer,
+        {
+          energyThresholdDb: -50,
+          minPauseMs: 1000,
+          frameSize: 2048,
+          hopSize: 512,
+        },
+        audioURL
+      );
+
+      setAnalysisResult(finalResult.geminiAnalysis.analysis);
+      setEnergies(finalResult.energies);
+      setTranscript(finalResult.geminiAnalysis.analysis.transcript);
+      setAiReview(finalResult.geminiAnalysis.analysis.summary_review);
+
+      setActiveTab("transcript");
     } catch (error) {
       console.error("Error analyzing audio file:", error);
       alert(error?.message || "Could not analyze this file.");
@@ -95,7 +121,7 @@ const Dashboard = () => {
             {activeTab === "transcript" ? (
               <TranscriptTab transcript={transcript} aiReview={aiReview} />
             ) : (
-              <MetricsTab analysisResult={analysisResult} />
+              <MetricsTab analysisResult={analysisResult} energies={energies} />
             )}
           </>
         )}
