@@ -8,14 +8,15 @@ const Left = () => {
   return (
     <div className=" h-full w-[60%] flex flex-col justify-center items-center pl-12">
       <h1 className="text-black text-8xl font-bold">
-        Your AI Feedback Partner in:
+        Speak with confidence in every:
       </h1>
-      <RotateWords words={["interview", "presentations", "speaking"]} />
+      <RotateWords words={["Interview", "Presentation", "Meeting"]} />
       <p className=" pr-20 mt-10 text-xl">
-        Poised is your AI communication coach, offering real-time feedback to
-        help you speak confidently during calls. Get personalized suggestions
-        and actionable insights. Your progress is tracked privately, just for
-        you.
+        Meet Voluble, your personal AI communication partner. It provides
+        instant, private feedback during your live calls and presentations. Stop
+        guessing and start improving with actionable insights on your pacing,
+        filler words, and tone. Voluble helps you sound clear, confident, and
+        compelling—all for your eyes only.
       </p>
 
       <button
