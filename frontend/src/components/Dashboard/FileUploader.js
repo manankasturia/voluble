@@ -2,7 +2,7 @@ import React from "react";
 
 const FileUploader = ({ onFileChange }) => {
   return (
-    <div className="mt-12 text-center">
+    <div className="my-12 text-center">
       <label className="inline-block cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-lg hover:from-blue-600 hover:to-blue-700 transition text-lg font-medium shadow-lg">
         Upload Audio File
         <input
