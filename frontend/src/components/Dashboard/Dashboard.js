@@ -7,6 +7,7 @@ import AudioPlayer from "./AudioPlayer";
 import FileUploader from "./FileUploader";
 import TranscriptTab from "./TranscriptTab";
 import MetricsTab from "./MetricsTab";
+import AudioRecorder from "./AudioRecorder";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("transcript");
@@ -70,6 +71,60 @@ const Dashboard = () => {
     }
   };
 
+  const handleRecording = async (blob) => {
+    try {
+      setIsAnalyzing(true);
+
+      const filename = `recording.${
+        blob.type.includes("mp4")
+          ? "m4a"
+          : blob.type.includes("ogg")
+          ? "ogg"
+          : "webm"
+      }`;
+      const file = new File([blob], filename, { type: blob.type });
+      setAudioFile(file);
+
+      const formData = new FormData();
+      formData.append("audio", file);
+
+      const uploadResponse = await fetch("http://localhost:8080/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const uploadData = await uploadResponse.json();
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.message || "Upload failed");
+      }
+      const audioURL = uploadData.fileUrl;
+      console.log("Recording uploaded successfully: ", audioURL);
+
+      const arrayBuffer = await blob.arrayBuffer();
+      const finalResult = await analyzeArrayBuffer(
+        arrayBuffer,
+        {
+          energyThresholdDb: -50,
+          minPauseMs: 1000,
+          frameSize: 2048,
+          hopSize: 512,
+        },
+        audioURL
+      );
+
+      setAnalysisResult(finalResult.geminiAnalysis.analysis);
+      setEnergies(finalResult.energies);
+      setTranscript(finalResult.geminiAnalysis.analysis.transcript);
+      setAiReview(finalResult.geminiAnalysis.analysis.summary_review);
+
+      setActiveTab("transcript");
+    } catch (error) {
+      console.error("Error analyzing audio file:", error);
+      alert(error?.message || "Could not analyze this file.");
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -78,7 +133,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl text-indigo-600 font-bold mb-6">Dashboard</h1>
-          <p className="mb-4 text-xl">Welcome, {user?.email}</p>
+          <p className="mb-4 text-xl">Welcome, {user?.displayName}</p>
 
           {isAnalyzing && (
             <div className="text-blue-600 font-medium mb-4 text-lg">
@@ -128,7 +183,13 @@ const Dashboard = () => {
 
         {/* Upload Section */}
         {!audioFile && !isAnalyzing && (
-          <FileUploader onFileChange={handleFileChange} />
+          <>
+            <FileUploader onFileChange={handleFileChange} />
+            <div className="text-lg text-center font-semibold text-gray-600">
+              OR
+            </div>
+            <AudioRecorder onRecorded={handleRecording} />
+          </>
         )}
       </div>
       <Footer />

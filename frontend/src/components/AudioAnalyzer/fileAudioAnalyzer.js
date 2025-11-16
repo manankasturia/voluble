@@ -27,6 +27,68 @@ function stddev(arr) {
   return Math.sqrt(variance);
 }
 
+function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
+  const bucketSizeInSeconds = bucketMs / 1000;
+  const framesPerBucket = Math.round(bucketSizeInSeconds / hopSeconds);
+
+  const downsampledArray = [];
+
+  for (let i = 0; i < dataArray.length; i += framesPerBucket) {
+    const chunk = dataArray.slice(i, i + framesPerBucket);
+
+    // Filter out nulls (for pitch) and invalid numbers
+    const validData = chunk.filter((val) => val !== null && !isNaN(val));
+
+    if (validData.length === 0) {
+      downsampledArray.push(null); // or 0 for volume
+    } else {
+      // Calculate the average for this bucket
+      const sum = validData.reduce((a, b) => a + b, 0);
+      downsampledArray.push(sum / validData.length);
+    }
+  }
+
+  return downsampledArray;
+}
+
+async function sendData(
+  audioURL,
+  pitches,
+  energies,
+  pauses,
+  amplitudes,
+  metrics,
+  hopSeconds
+) {
+  const data = {
+    audioURL: audioURL,
+    pitchHz: downsampleData(pitches, hopSeconds, 250),
+    volume: downsampleData(energies, hopSeconds, 250),
+    amplitudes: downsampleData(amplitudes, hopSeconds, 250),
+    pauses: pauses,
+    metrics: metrics,
+  };
+
+  try {
+    const response = await fetch(
+      "http://localhost:8080/frontend/getVolumeParams",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const result = await response.json();
+    console.log("Data sent successfully: ", result);
+    return result;
+  } catch (error) {
+    console.error("Error sending data: ", error);
+  }
+}
+
 export async function analyzeArrayBuffer(arrayBuffer, opts = {}, audioURL) {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
@@ -142,66 +204,4 @@ export async function analyzeAudioBuffer(audioBuffer, opts = {}, audioURL) {
   );
 
   return { geminiAnalysis, energies };
-}
-
-function downsampleData(dataArray, hopSeconds, bucketMs = 250) {
-  const bucketSizeInSeconds = bucketMs / 1000;
-  const framesPerBucket = Math.round(bucketSizeInSeconds / hopSeconds);
-
-  const downsampledArray = [];
-
-  for (let i = 0; i < dataArray.length; i += framesPerBucket) {
-    const chunk = dataArray.slice(i, i + framesPerBucket);
-
-    // Filter out nulls (for pitch) and invalid numbers
-    const validData = chunk.filter((val) => val !== null && !isNaN(val));
-
-    if (validData.length === 0) {
-      downsampledArray.push(null); // or 0 for volume
-    } else {
-      // Calculate the average for this bucket
-      const sum = validData.reduce((a, b) => a + b, 0);
-      downsampledArray.push(sum / validData.length);
-    }
-  }
-
-  return downsampledArray;
-}
-
-async function sendData(
-  audioURL,
-  pitches,
-  energies,
-  pauses,
-  amplitudes,
-  metrics,
-  hopSeconds
-) {
-  const data = {
-    audioURL: audioURL,
-    pitchHz: downsampleData(pitches, hopSeconds, 250),
-    volume: downsampleData(energies, hopSeconds, 250),
-    amplitudes: downsampleData(amplitudes, hopSeconds, 250),
-    pauses: pauses,
-    metrics: metrics,
-  };
-
-  try {
-    const response = await fetch(
-      "http://localhost:8080/frontend/getVolumeParams",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
-
-    const result = await response.json();
-    console.log("Data sent successfully: ", result);
-    return result;
-  } catch (error) {
-    console.error("Error sending data: ", error);
-  }
 }
