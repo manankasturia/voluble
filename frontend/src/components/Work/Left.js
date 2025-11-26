@@ -1,9 +1,14 @@
 import React from 'react';
-const slideImages = [
-  'https://yoodli.ai/assets/yoodli-HIW1.webp', 
-  'https://yoodli.ai/assets/yoodli-HIW2.webp', 
-  'https://yoodli.ai/assets/yoodli-HIW3.webp', 
-  'https://yoodli.ai/assets/yoodli-HIW4.webp',
+import img5 from '../../assets/img5.png';
+import img6 from '../../assets/img6.png';
+import img7 from '../../assets/img7.png';
+import img8 from '../../assets/img8.png';
+
+const slideImages = [ 
+  img5,
+  img6,
+  img7,
+  img8,
 ];
 
 const Left = ({ currentSlide }) => {
