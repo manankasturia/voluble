@@ -7,7 +7,7 @@ const Left = () => {
 
   return (
     <div className=" h-full w-[60%] flex flex-col justify-center items-center pl-12">
-      <h1 className="text-black text-8xl font-bold">
+      <h1 className="text-black text-7xl font-bold">
         Speak with confidence in every:
       </h1>
       <RotateWords words={["Interview", "Presentation", "Meeting"]} />

@@ -139,28 +139,28 @@ const Footer = () => {
             <a
               href="#"
               aria-label="Developer 2 Facebook Profile"
-              className="hover:text-white transition-colors opacity-75 hover:opacity-100"
+              className="hover:text-white transition-colors"
             >
               <Facebook size={20} />
             </a>
             <a
               href="#"
               aria-label="Developer 2 Twitter Profile"
-              className="hover:text-white transition-colors opacity-75 hover:opacity-100"
+              className="hover:text-white transition-colors"
             >
               <Twitter size={20} />
             </a>
             <a
               href="#"
               aria-label="Developer 2 LinkedIn Profile"
-              className="hover:text-white transition-colors opacity-75 hover:opacity-100"
+              className="hover:text-white transition-colors"
             >
               <Linkedin size={20} />
             </a>
             <a
               href="#"
               aria-label="Developer 2 GitHub Profile"
-              className="hover:text-white transition-colors opacity-75 hover:opacity-100"
+              className="hover:text-white transition-colors"
             >
               <Github size={20} />
             </a>
