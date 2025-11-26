@@ -1,17 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import iconSrc from "../../assets/voluble_icon.png";
 
 const SignUp = () => {
   const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
     try {
+      e.preventDefault();
       await signInWithGoogle();
       console.log("Sign-up successful");
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Sign-up failed:", error);
     }

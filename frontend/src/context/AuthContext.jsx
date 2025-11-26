@@ -12,6 +12,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
       if (initializing) {
         setInitializing(false);
       }
+      setLoading(false);
     });
     return unsubscribe;
   }, []);
@@ -43,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, initializing, signInWithGoogle, signOutUser }}
+      value={{ user, initializing, loading, signInWithGoogle, signOutUser }}
     >
       {children}
     </AuthContext.Provider>
