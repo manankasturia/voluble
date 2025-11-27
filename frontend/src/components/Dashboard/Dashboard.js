@@ -136,7 +136,7 @@ const Dashboard = () => {
           <p className="mb-4 text-xl">Welcome, {user?.displayName}</p>
 
           {isAnalyzing && (
-            <div className="text-blue-600 font-medium mb-4 text-lg">
+            <div className="text-blue-600 font-medium py-12 mb-4 text-lg">
               Analyzing audio...
             </div>
           )}
