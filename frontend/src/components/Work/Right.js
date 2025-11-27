@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const slideContent = [
   {
@@ -50,6 +51,7 @@ const slideContent = [
 
 const Right = ({ currentSlide }) => {
   const navigate = useNavigate();
+  const { user, initializing } = useAuth();
 
   return (
     <div className="h-screen w-[50%] relative overflow-visible">
@@ -99,7 +101,13 @@ const Right = ({ currentSlide }) => {
         }`}
       >
         <button
-          onClick={() => navigate("/signup")}
+          onClick={() =>
+            initializing
+              ? null
+              : user
+              ? navigate("/dashboard")
+              : navigate("/signup")
+          }
           className=" bg-blue-300 text-indigo-900 border-black font-bold py-4 px-6 rounded-lg shadow-lg hover:bg-blue-700  hover:text-white transition-colors text-lg"
         >
           Try Voluble Now

@@ -20,7 +20,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
-  console.log(location);
   if (loading) return null;
   if (!user)
     return <Navigate to="/signin" replace state={{ from: location }} />;
