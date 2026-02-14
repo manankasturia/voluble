@@ -15,12 +15,16 @@ app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage() });
 const ASSEMBLYAI_API_KEY = process.env.assembly_apikey;
 const ASSEMBLYAI_UPLOAD_URL = "https://api.assemblyai.com/v2/upload";
-const BACKEND_URL =
-  process.env.REACT_APP_API_BASE || `http://localhost:${port}`;
 
-app.use(`${BACKEND_URL}/frontend`, volumeParams);
+// Root route
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-app.post(`${BACKEND_URL}/upload`, upload.single("audio"), async (req, res) => {
+// Routes (use relative paths only)
+app.use("/frontend", volumeParams);
+
+app.post("/upload", upload.single("audio"), async (req, res) => {
   if (!req.file) {
     return res
       .status(400)
@@ -36,6 +40,7 @@ app.post(`${BACKEND_URL}/upload`, upload.single("audio"), async (req, res) => {
 
     res.json({ fileUrl: uploadResponse.data.upload_url });
   } catch (error) {
+    console.error("Upload error:", error?.response?.data || error.message);
     res.status(500).json({ success: false, message: "Upload failed" });
   }
 });
