@@ -19,7 +19,7 @@ const Dashboard = () => {
   const [aiReview, setAiReview] = useState("");
 
   const { user } = useAuth();
-  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
+  const API_BASE = "https://volubleai.vercel.app";
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
