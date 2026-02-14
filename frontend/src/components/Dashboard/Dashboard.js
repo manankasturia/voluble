@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [aiReview, setAiReview] = useState("");
 
   const { user } = useAuth();
+  const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -34,7 +35,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append("audio", file);
 
-      const uploadResponse = await fetch("http://localhost:8080/upload", {
+      const uploadResponse = await fetch(`${API_BASE}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -54,7 +55,7 @@ const Dashboard = () => {
           frameSize: 2048,
           hopSize: 512,
         },
-        audioURL
+        audioURL,
       );
 
       setAnalysisResult(finalResult.geminiAnalysis.analysis);
@@ -79,8 +80,8 @@ const Dashboard = () => {
         blob.type.includes("mp4")
           ? "m4a"
           : blob.type.includes("ogg")
-          ? "ogg"
-          : "webm"
+            ? "ogg"
+            : "webm"
       }`;
       const file = new File([blob], filename, { type: blob.type });
       setAudioFile(file);
@@ -88,7 +89,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append("audio", file);
 
-      const uploadResponse = await fetch("http://localhost:8080/upload", {
+      const uploadResponse = await fetch(`${API_BASE}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -108,7 +109,7 @@ const Dashboard = () => {
           frameSize: 2048,
           hopSize: 512,
         },
-        audioURL
+        audioURL,
       );
 
       setAnalysisResult(finalResult.geminiAnalysis.analysis);
