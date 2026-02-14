@@ -58,7 +58,7 @@ async function sendData(
   pauses,
   amplitudes,
   metrics,
-  hopSeconds
+  hopSeconds,
 ) {
   const data = {
     audioURL: audioURL,
@@ -71,14 +71,14 @@ async function sendData(
 
   try {
     const response = await fetch(
-      "http://localhost:8080/frontend/getVolumeParams",
+      `${process.env.REACT_APP_API_BASE || "http://localhost:8080"}/frontend/getVolumeParams`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
+      },
     );
 
     const result = await response.json();
@@ -200,7 +200,7 @@ export async function analyzeAudioBuffer(audioBuffer, opts = {}, audioURL) {
     pauses,
     amplitudes,
     metrics,
-    hopSeconds
+    hopSeconds,
   );
 
   return { geminiAnalysis, energies };
