@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -63,21 +63,21 @@ Here are your instructions for each field:
 `;
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-pro-latest",
+  model: "gemini-2.5-flash",
   systemInstruction: systemPrompt,
   generationConfig: {
     responseMimeType: "application/json",
-  }
+  },
 });
 
 export const getGeminiAnalysis = async (userAudioData) => {
   const prompt = JSON.stringify(userAudioData);
-  
+
   console.log("Sending combined data to Gemini...");
-  
+
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const jsonText = response.text();
-  
+
   return JSON.parse(jsonText);
 };
