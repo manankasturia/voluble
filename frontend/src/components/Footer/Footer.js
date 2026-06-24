@@ -117,14 +117,14 @@ const Footer = () => {
               <Twitter size={20} />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/rohit-dangwal/"
               aria-label="Developer 1 LinkedIn Profile"
               className="hover:text-white transition-colors"
             >
               <Linkedin size={20} />
             </a>
             <a
-              href="#"
+              href="https://github.com/ROHIT-dangwal"
               aria-label="Developer 1 GitHub Profile"
               className="hover:text-white transition-colors"
             >
@@ -151,14 +151,14 @@ const Footer = () => {
               <Twitter size={20} />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/rohit-dangwal/"
               aria-label="Developer 2 LinkedIn Profile"
               className="hover:text-white transition-colors"
             >
               <Linkedin size={20} />
             </a>
             <a
-              href="#"
+              href="https://github.com/ROHIT-dangwal"
               aria-label="Developer 2 GitHub Profile"
               className="hover:text-white transition-colors"
             >
