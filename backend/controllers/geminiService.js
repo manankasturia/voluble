@@ -63,7 +63,7 @@ Here are your instructions for each field:
 `;
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-pro-latest",
+  model: "gemini-2.5-flash",
   systemInstruction: systemPrompt,
   generationConfig: {
     responseMimeType: "application/json",
