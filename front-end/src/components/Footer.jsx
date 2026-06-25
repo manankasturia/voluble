@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FiLinkedin, FiGithub } from "react-icons/fi";
 
 const LINKS = {
-  Product: ["Features", "Use Cases", "Pricing", "Changelog"],
+  Product: ["Features", "Use Cases", "How It Works", "Pricing"],
   Company: ["About", "Blog", "Careers", "Press"],
   Legal: ["Privacy", "Terms", "Security", "Cookies"],
 };

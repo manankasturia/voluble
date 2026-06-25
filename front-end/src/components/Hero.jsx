@@ -73,14 +73,14 @@ export default function Hero() {
     };
   }, []);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      alert(
-        `Processing: ${file.name}\nIn production this triggers the speech analysis pipeline.`,
-      );
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     alert(
+  //       `Processing: ${file.name}\nIn production this triggers the speech analysis pipeline.`,
+  //     );
+  //   }
+  // };
 
   return (
     <section className="relative flex items-center justify-center min-h-screen overflow-hidden bg-[#07090f]">
@@ -165,16 +165,11 @@ export default function Hero() {
             speed, confidence, filler words &amp; stammer analysis.
           </p>
           <div className="pointer-events-auto flex items-center gap-3">
-            <label className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium text-sm cursor-pointer transition-all shadow-[0_8px_32px_rgba(37,99,235,0.32)] hover:scale-[1.03]">
+            <button onClick={() => navigate("/dashboard")} className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium text-sm cursor-pointer transition-all shadow-[0_8px_32px_rgba(37,99,235,0.32)] hover:scale-[1.03]">
               <UploadIcon />
               Upload MP3
-              <input
-                type="file"
-                accept=".mp3,audio/*"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-            </label>
+            </button>
+
             <button onClick={() => navigate("/how-it-works")} className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 hover:border-white/40 text-white/75 hover:text-white text-sm transition-all">
               <PlayIcon />
               See demo

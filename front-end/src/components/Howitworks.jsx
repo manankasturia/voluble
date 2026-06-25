@@ -396,7 +396,7 @@ export default function Howitworks() {
             The full pipeline runs on every upload — free to try, no account needed.
           </p>
           <a
-            href="/"
+            href="/dashboard"
             className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#2563eb] hover:bg-[#3b82f6] text-white font-medium text-sm transition-all shadow-[0_8px_32px_rgba(37,99,235,0.28)] hover:scale-[1.03]"
           >
             <UploadIcon /> Try it with your voice
