@@ -19,7 +19,6 @@ export default function App() {
                 <Hero />
                 <Features />
                 <UseCases />
-                <Pricing />
                 <Footer />
               </>
             }

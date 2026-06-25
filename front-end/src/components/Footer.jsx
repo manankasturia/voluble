@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FiLinkedin, FiGithub } from "react-icons/fi";
 
 const LINKS = {
   Product: ["Features", "Use Cases", "Pricing", "Changelog"],
@@ -42,9 +43,44 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-white/[0.07]">
         <p className="text-white/22 text-xs">© 2026 Volube Inc. All rights reserved.</p>
         <div className="flex items-center gap-6">
-          {["Twitter", "LinkedIn", "GitHub"].map((s) => (
-            <a key={s} href="#" className="text-white/28 hover:text-white/65 text-xs transition-colors">{s}</a>
-          ))}
+          <a 
+          href="https://linkedin.com/in/manankasturia"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/38 hover:opacity-75 transition-opacity"
+          >
+            <FiLinkedin size={20} />
+          </a>
+          <a 
+          href="https://github.com/manankasturia"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/38 hover:opacity-75 transition-opacity"
+          >
+            <FiGithub size={20} />
+          </a>
+
+          <div
+              className="w-px h-5 bg-gray-700 hidden md:block"
+              aria-hidden="true"
+          ></div>
+
+          <a 
+          href="https://linkedin.com/in/rohit-dangwal"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/38 hover:opacity-75 transition-opacity"
+          >
+            <FiLinkedin size={20} />
+          </a>
+          <a 
+          href="https://github.com/ROHIT-dangwal"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/38 hover:opacity-75 transition-opacity"
+          >
+            <FiGithub size={20} />
+          </a>
         </div>
       </div>
     </footer>

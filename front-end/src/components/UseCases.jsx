@@ -50,14 +50,6 @@ export default function UseCases() {
               <p className="text-white/78 font-medium text-sm mb-1">{u.headline}</p>
               <p className="text-white/38 text-sm leading-relaxed">{u.body}</p>
             </div>
-            <div className="flex-shrink-0">
-              <span className="inline-flex items-center gap-1 text-sm text-blue-400 group-hover:gap-2 transition-all">
-                Learn more
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                  <path d="M2.5 6.5h8M8 4l2.5 2.5L8 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
-            </div>
           </div>
         ))}
       </div>
