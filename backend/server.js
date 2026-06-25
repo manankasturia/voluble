@@ -16,15 +16,13 @@ const upload = multer({ storage: multer.memoryStorage() });
 const ASSEMBLYAI_API_KEY = process.env.assembly_apikey;
 const ASSEMBLYAI_UPLOAD_URL = "https://api.assemblyai.com/v2/upload";
 
+// Root route
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// Routes (use relative paths only)
 app.use("/frontend", volumeParams);
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 
 app.post("/upload", upload.single("audio"), async (req, res) => {
   if (!req.file) {
@@ -37,11 +35,16 @@ app.post("/upload", upload.single("audio"), async (req, res) => {
     const uploadResponse = await axios.post(
       ASSEMBLYAI_UPLOAD_URL,
       req.file.buffer,
-      { headers: { Authorization: ASSEMBLYAI_API_KEY } }
+      { headers: { Authorization: ASSEMBLYAI_API_KEY } },
     );
 
     res.json({ fileUrl: uploadResponse.data.upload_url });
   } catch (error) {
+    console.error("Upload error:", error?.response?.data || error.message);
     res.status(500).json({ success: false, message: "Upload failed" });
   }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
