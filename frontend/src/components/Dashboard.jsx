@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,6 +9,9 @@ import AnalysisProgress from "./AnalysisProgress";
 import TranscriptTab from "./TranscriptTab";
 import MetricsTab from "./MetricsTab";
 import HistoryList from "./HistoryList";
+import HistoryLoginPrompt from "./HistoryLoginPrompt";
+import { saveAnalysis, fetchHistory } from "../lib/historyService";
+
 
 /**
  * BACKEND CONTRACT — UNCHANGED FROM OLD DASHBOARD:
@@ -35,10 +38,25 @@ const Dashboard = () => {
   const [phase, setPhase] = useState(null); // "uploading" | "measuring" | "thinking" | null
   const [transcript, setTranscript] = useState("");
   const [aiReview, setAiReview] = useState("");
-  const [history, setHistory] = useState([]); // TODO: hydrate from a real /history endpoint
+  const [history, setHistory] = useState([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
 
-  const { user } = useAuth();
+  const { user, initializing } = useAuth();
   const API_BASE = process.env.REACT_APP_API_BASE || "http://localhost:8080";
+
+  // load this user's saved history whenever auth state settles on a logged-in user
+  useEffect(() => {
+    if (initializing) return;
+    if (!user) {
+      setHistory([]);
+      return;
+    }
+    setHistoryLoading(true);
+    fetchHistory(user.uid)
+      .then(setHistory)
+      .finally(() => setHistoryLoading(false));
+  }, [user, initializing]);
+
 
   const runPipeline = async (file, arrayBufferSource) => {
     setPhase("uploading");
@@ -58,9 +76,6 @@ const Dashboard = () => {
     setPhase("measuring");
     const arrayBuffer = await arrayBufferSource();
 
-    // analyzeArrayBuffer internally also calls Gemini (getVolumeParams) — we
-    // flip to "thinking" just before that network round trip starts so the
-    // stepper reflects reality as closely as the current API shape allows.
     setPhase("thinking");
     const finalResult = await analyzeArrayBuffer(
       arrayBuffer,
@@ -75,19 +90,21 @@ const Dashboard = () => {
     setAiReview(analysis.summary_review);
     setActiveTab("transcript");
 
-    // Append to local history (swap for a server round-trip once a save
-    // endpoint exists — see HistoryList.jsx header comment)
-    setHistory((h) => [
-      {
-        id: `${Date.now()}`,
-        fileName: file.name,
-        createdAt: new Date().toISOString(),
-        words_per_minute: analysis.words_per_minute,
-        confidence_score: analysis.confidence_score,
-        filler_word_count: analysis.filler_word_count,
-      },
-      ...h,
-    ]);
+    if (user) {
+      const newId = await saveAnalysis(user.uid, { fileName: file.name, analysis });
+      setHistory((h) => [
+        {
+          id: newId || `local-${Date.now()}`,
+          fileName: file.name,
+          createdAt: new Date().toISOString(),
+          words_per_minute: analysis.words_per_minute,
+          confidence_score: analysis.confidence_score,
+          filler_word_count: analysis.filler_word_count,
+          full: analysis,
+        },
+        ...h,
+      ]);
+    }
   };
 
   const handleFileChange = async (e) => {
@@ -117,9 +134,8 @@ const Dashboard = () => {
     setAnalysisResult(null);
 
     try {
-      const filename = `recording.${
-        blob.type.includes("mp4") ? "m4a" : blob.type.includes("ogg") ? "ogg" : "webm"
-      }`;
+      const filename = `recording.${blob.type.includes("mp4") ? "m4a" : blob.type.includes("ogg") ? "ogg" : "webm"
+        }`;
       const file = new File([blob], filename, { type: blob.type });
       setAudioFile(file);
 
@@ -141,11 +157,21 @@ const Dashboard = () => {
     setAiReview("");
   };
 
+  const openHistoryItem = (item) => {
+    if (!item.full) return;
+    setAudioFile({ name: item.fileName }); // just file name
+    setAnalysisResult(item.full);
+    setEnergies(null); // historical energies aren't persisted (see historyService.js)
+    setTranscript(item.full.transcript || "");
+    setAiReview(item.full.summary_review || "");
+    setActiveTab("transcript");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen bg-[#07090f] text-white">
       <Navbar />
 
-      {/* Grid bg, matches Hero / Howitworks */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
@@ -180,7 +206,9 @@ const Dashboard = () => {
         {/* Result state */}
         {audioFile && !isAnalyzing && (
           <div className="flex flex-col gap-6">
-            <AudioPlayer audioFile={audioFile} isAnalyzing={isAnalyzing} />
+            {audioFile instanceof File && (
+              <AudioPlayer audioFile={audioFile} isAnalyzing={isAnalyzing} />
+            )}
 
             {analysisResult && (
               <>
@@ -193,11 +221,10 @@ const Dashboard = () => {
                       <button
                         key={t.key}
                         onClick={() => setActiveTab(t.key)}
-                        className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
-                          activeTab === t.key
-                            ? "bg-blue-600 text-white"
-                            : "text-white/45 hover:text-white"
-                        }`}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === t.key
+                          ? "bg-blue-600 text-white"
+                          : "text-white/45 hover:text-white"
+                          }`}
                       >
                         {t.label}
                       </button>
@@ -223,19 +250,15 @@ const Dashboard = () => {
         )}
 
         {/* History */}
-        <div className="mt-16">
+        <div className="mt-16" id="history">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-lg font-semibold text-white">Past analyses</h2>
           </div>
-          <HistoryList
-            items={history}
-            onSelect={(item) => {
-              // Local-history click is a no-op for now since full results
-              // aren't persisted yet — wire this to re-fetch a saved
-              // analysisResult by item.id once a /history/:id endpoint exists.
-              console.log("Selected history item:", item);
-            }}
-          />
+          {!initializing && !user ? (
+            <HistoryLoginPrompt />
+          ) : (
+            <HistoryList items={history} loading={historyLoading} onSelect={openHistoryItem} />
+          )}
         </div>
       </div>
 

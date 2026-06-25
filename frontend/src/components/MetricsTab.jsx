@@ -46,7 +46,7 @@ export default function MetricsTab({ analysisResult, energies }) {
             color="#60a5fa"
           />
           <MetricMeter
-            value={analysisResult.words_per_minute || "—"}
+            value={Math.round(analysisResult.words_per_minute) || "—"}
             percentage={(analysisResult.words_per_minute / 250) * 100}
             unit="WPM"
             label="Speech speed"
@@ -68,11 +68,10 @@ export default function MetricsTab({ analysisResult, energies }) {
           <button
             key={t.key}
             onClick={() => setSub(t.key)}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-              sub === t.key
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${sub === t.key
                 ? "bg-blue-600 text-white"
                 : "text-white/45 hover:text-white hover:bg-white/[0.05]"
-            }`}
+              }`}
           >
             {t.label}
           </button>
@@ -207,20 +206,18 @@ function PausesContent({ pauses }) {
           {pauses.map((pause, i) => (
             <div
               key={i}
-              className={`rounded-xl border-l-2 p-4 transition-colors ${
-                pause.is_awkward
+              className={`rounded-xl border-l-2 p-4 transition-colors ${pause.is_awkward
                   ? "border-red-400/60 bg-red-500/[0.05] hover:bg-red-500/[0.08]"
                   : "border-emerald-400/60 bg-emerald-500/[0.05] hover:bg-emerald-500/[0.08]"
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-white/75 text-sm font-medium">
                   Pause #{i + 1} at {(pause.start_ms / 1000).toFixed(2)}s
                 </span>
                 <span
-                  className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    pause.is_awkward ? "bg-red-500/15 text-red-300" : "bg-emerald-500/15 text-emerald-300"
-                  }`}
+                  className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${pause.is_awkward ? "bg-red-500/15 text-red-300" : "bg-emerald-500/15 text-emerald-300"
+                    }`}
                 >
                   {pause.is_awkward ? "Awkward" : "Natural"}
                 </span>

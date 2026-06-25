@@ -1,16 +1,4 @@
-/**
- * Past-analyses list. NEW component — there was no equivalent in the old
- * dashboard, so there's no existing backend contract to preserve here.
- *
- * Expects `items` shaped like:
- *   { id, fileName, createdAt (ISO string), durationSec, words_per_minute,
- *     confidence_score, filler_word_count }
- *
- * Wire this to a real endpoint by replacing the `items` prop in Dashboard
- * with e.g. a fetch to `${API_BASE}/history?uid=...` that returns saved
- * analysisResult rows (you're already producing this exact shape per
- * analysis — just persist it server-side keyed by user).
- */
+
 export default function HistoryList({ items = [], onSelect, loading }) {
   if (loading) {
     return (

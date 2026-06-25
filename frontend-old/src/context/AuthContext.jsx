@@ -1,6 +1,11 @@
-import React, { createContext, useState, useEffect } from "react";
-import { auth, provider } from "../lib/firebase";
-import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import {
+  auth,
+  provider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from "../lib/firebase";
 
 const AuthContext = createContext(null);
 
