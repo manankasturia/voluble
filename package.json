@@ -5,7 +5,9 @@
   "scripts": {
     "server": "npm run server --prefix backend",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm:server\" \"npm:client\""
+    "dev": "concurrently \"npm:server\" \"npm:client\"",
+    "install-client": "cd frontend && npm install",
+    "build": "npm run install-client && CI=false npm run build --prefix frontend"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",
