@@ -1,95 +1,62 @@
 import { Link } from "react-router-dom";
+import { FiLinkedin, FiGithub, FiMail } from "react-icons/fi";
 import Footer from "./Footer";
 
-const PLANS = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "",
-    desc: "Try Volube with no commitment.",
-    features: [
-      "5 analyses / month",
-      "Transcript + filler word count",
-      "Basic speed metric",
-      "Export as text",
-    ],
-    cta: "Get started free",
-    highlight: false,
-  },
-  {
-    name: "Pro",
-    price: "$19",
-    period: "/mo",
-    desc: "For speakers who take practice seriously.",
-    features: [
-      "Unlimited analyses",
-      "Full stammer + confidence report",
-      "Segment-by-segment breakdown",
-      "Progress tracking over time",
-      "PDF & CSV export",
-    ],
-    cta: "Start free trial",
-    highlight: true,
-  },
-  {
-    name: "Teams",
-    price: "Custom",
-    period: "",
-    desc: "For coaches, agencies, and enterprises.",
-    features: [
-      "Everything in Pro",
-      "Multi-speaker support",
-      "Coach dashboard",
-      "API access",
-      "Priority support & SLA",
-    ],
-    cta: "Talk to us",
-    highlight: false,
-  },
+const MAKERS = [
+  { name: "Manan Kasturia", linkedin: "https://linkedin.com/in/manankasturia", github: "https://github.com/manankasturia" },
+  { name: "Rohit Dangwal", linkedin: "https://linkedin.com/in/rohit-dangwal", github: "https://github.com/ROHIT-dangwal" },
+];
+
+const CONTACT_EMAIL = ["manankasturia5@gmail.com", "rdsd21104@gmail.com"];
+
+const INCLUDED = [
+  "Unlimited uploads & recordings",
+  "Full transcript, timestamped",
+  "Speech speed (WPM) breakdown",
+  "Filler word & weak word detection",
+  "Stammer & repetition analysis",
+  "Confidence scoring",
+  "AI coach review on every analysis",
+  "History saved to your account",
 ];
 
 export default function Pricing({ standalone }) {
   return (
-    <section id="pricing" className={`px-6 md:px-12 max-w-6xl mx-auto ${standalone ? "pt-36" : ""}`}>
-      <div className="text-center mb-16">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400 mb-3 block">
-          Pricing
-        </span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white">Simple, clear pricing.</h2>
-        <p className="text-white/38 mt-4 max-w-sm mx-auto text-sm">
-          Start free. Upgrade when your practice gets serious.
-        </p>
-      </div>
+    <>
+      <section id="pricing" className={`px-6 mb-20 md:px-12 max-w-5xl mx-auto ${standalone ? "pt-36" : ""}`}>
+        <div className="text-center mb-16">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400 mb-3 block">
+            Pricing
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white">No catch. It's free.</h2>
+          <p className="text-white/38 mt-4 max-w-md mx-auto text-sm leading-relaxed">
+            Volube is a hobby project we built to learn and to show what we can do —
+            not a startup with a paywall waiting behind the corner.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-20">
-        {PLANS.map((plan) => (
-          <div
-            key={plan.name}
-            className={`relative flex flex-col p-8 rounded-2xl border transition-all ${plan.highlight
-              ? "border-blue-500/50 bg-gradient-to-b from-blue-950/55 to-[#07090f] shadow-xl shadow-blue-900/20"
-              : "border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04]"
-              }`}
-          >
-            {plan.highlight && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="px-4 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full tracking-wide">
-                  Most popular
-                </span>
-              </div>
-            )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="relative flex flex-col p-8 md:p-9 rounded-2xl border border-blue-500/30 bg-gradient-to-b from-blue-950/40 to-[#07090f]">
+            <div className="absolute -top-3 left-8">
+              <span className="px-4 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full tracking-wide">
+                Everything included
+              </span>
+            </div>
 
-            <div className="mb-6">
-              <p className="text-white/48 text-sm font-medium mb-1">{plan.name}</p>
-              <div className="flex items-end gap-1">
-                <span className="text-4xl font-bold text-white">{plan.price}</span>
-                {plan.period && <span className="text-white/38 text-sm mb-1">{plan.period}</span>}
+            <div className="mb-7 mt-3">
+              <div className="flex items-end gap-1 mb-2">
+                <span className="text-4xl font-bold text-white">$0</span>
+                <span className="text-white/38 text-sm mb-1">forever</span>
               </div>
-              <p className="text-white/32 text-sm mt-2">{plan.desc}</p>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Every feature, unlimited, no account tier to upgrade out of —
+                because there isn't one.
+              </p>
             </div>
 
             <ul className="flex flex-col gap-3 mb-8 flex-1">
-              {plan.features.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-white/58">
+              {INCLUDED.map((f) => (
+                <li key={f} className="flex items-start gap-2 text-sm text-white/65">
                   <svg className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8l3.5 3.5L13 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -99,20 +66,58 @@ export default function Pricing({ standalone }) {
             </ul>
 
             <Link
-              to="/features"
-              className={`w-full text-center py-3 rounded-full text-sm font-medium transition-all ${plan.highlight
-                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-700/28"
-                : "border border-white/15 text-white/65 hover:text-white hover:border-white/30"
-                }`}
+              to="/dashboard"
+              className="w-full text-center py-3 rounded-full text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-700/28 transition-all"
             >
-              {plan.cta}
+              Start analysing — free
             </Link>
           </div>
-        ))}
-      </div>
 
+          <div className="relative flex flex-col p-8 md:p-9 rounded-2xl border border-white/[0.07] bg-white/[0.02]">
+            <div className="mb-7">
+              <p className="text-white/48 text-sm font-medium mb-1">Want something custom?</p>
+              <h3 className="text-2xl font-bold text-white mb-3">Let's build it together.</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                We're the two people behind Volube. If you've got an idea, a feature
+                this site is missing, or a project you want built from scratch —
+                just reach out.
+              </p>
+            </div>
+
+            <a
+              href={`mailto:${CONTACT_EMAIL[0]}`}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium border border-white/15 text-white hover:bg-white/[0.06] hover:border-white/30 transition-all mb-7"
+            >
+              <FiMail size={15} />
+              {CONTACT_EMAIL[0]}
+            </a>
+            <a
+              href={`mailto:${CONTACT_EMAIL[1]}`}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-medium border border-white/15 text-white hover:bg-white/[0.06] hover:border-white/30 transition-all mb-7"
+            >
+              <FiMail size={15} />
+              {CONTACT_EMAIL[1]}
+            </a>
+
+            <div className="flex flex-col gap-3 mt-auto">
+              {MAKERS.map((m) => (
+                <div key={m.name} className="flex items-center justify-between gap-3 py-2 border-t border-white/[0.06] first:border-t-0 first:pt-0">
+                  <span className="text-white/60 text-sm">{m.name}</span>
+                  <div className="flex items-center gap-4">
+                    <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/38 hover:text-white transition-colors">
+                      <FiLinkedin size={16} />
+                    </a>
+                    <a href={m.github} target="_blank" rel="noopener noreferrer" className="text-white/38 hover:text-white transition-colors">
+                      <FiGithub size={16} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
-
-    </section>
+    </>
   );
 }
