@@ -36,6 +36,7 @@ function AppRoutes() {
   return (
     <div className="min-h-screen bg-[#07090f] text-white font-sans">
       <Navbar />
+
       <Routes>
         <Route
           path="/"
@@ -52,6 +53,7 @@ function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+
       <Footer />
     </div>
   );
