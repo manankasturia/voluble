@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const PLANS = [
   {
@@ -49,7 +50,7 @@ const PLANS = [
 
 export default function Pricing({ standalone }) {
   return (
-    <section id="pricing" className={`py-28 px-6 md:px-12 max-w-6xl mx-auto ${standalone ? "pt-36" : ""}`}>
+    <section id="pricing" className={`px-6 md:px-12 max-w-6xl mx-auto ${standalone ? "pt-36" : ""}`}>
       <div className="text-center mb-16">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400 mb-3 block">
           Pricing
@@ -60,15 +61,14 @@ export default function Pricing({ standalone }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-20">
         {PLANS.map((plan) => (
           <div
             key={plan.name}
-            className={`relative flex flex-col p-8 rounded-2xl border transition-all ${
-              plan.highlight
-                ? "border-blue-500/50 bg-gradient-to-b from-blue-950/55 to-[#07090f] shadow-xl shadow-blue-900/20"
-                : "border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04]"
-            }`}
+            className={`relative flex flex-col p-8 rounded-2xl border transition-all ${plan.highlight
+              ? "border-blue-500/50 bg-gradient-to-b from-blue-950/55 to-[#07090f] shadow-xl shadow-blue-900/20"
+              : "border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.04]"
+              }`}
           >
             {plan.highlight && (
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -100,17 +100,19 @@ export default function Pricing({ standalone }) {
 
             <Link
               to="/features"
-              className={`w-full text-center py-3 rounded-full text-sm font-medium transition-all ${
-                plan.highlight
-                  ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-700/28"
-                  : "border border-white/15 text-white/65 hover:text-white hover:border-white/30"
-              }`}
+              className={`w-full text-center py-3 rounded-full text-sm font-medium transition-all ${plan.highlight
+                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-700/28"
+                : "border border-white/15 text-white/65 hover:text-white hover:border-white/30"
+                }`}
             >
               {plan.cta}
             </Link>
           </div>
         ))}
       </div>
+
+      <Footer />
+
     </section>
   );
 }

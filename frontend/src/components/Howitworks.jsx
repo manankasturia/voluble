@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import Footer from "./Footer";
 
 const STEPS = [
   {
@@ -82,10 +83,10 @@ export default function Howitworks() {
         const active = recording;
         const wave = active
           ? Math.abs(
-              Math.sin(i * 0.28 + tickRef.current * 0.07) * 0.55 +
-              Math.sin(i * 0.11 - tickRef.current * 0.05) * 0.35 +
-              Math.sin(i * 0.6 + tickRef.current * 0.09) * 0.1
-            )
+            Math.sin(i * 0.28 + tickRef.current * 0.07) * 0.55 +
+            Math.sin(i * 0.11 - tickRef.current * 0.05) * 0.35 +
+            Math.sin(i * 0.6 + tickRef.current * 0.09) * 0.1
+          )
           : 0.08;
         const barH = Math.max(3, wave * H * 0.82);
         const x = gap + i * (barW + gap);
@@ -403,6 +404,8 @@ export default function Howitworks() {
           </a>
         </div>
       </div>
+
+      <Footer />
 
       <style>{`
         @keyframes pulse-dot {
