@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
 import { analyzeArrayBuffer } from "./AudioAnalyzer/fileAudioAnalyzer";
 import AudioPlayer from "./AudioPlayer";
 import UploadCard from "./UploadCard";
@@ -13,22 +11,6 @@ import HistoryLoginPrompt from "./HistoryLoginPrompt";
 import { saveAnalysis, fetchHistory } from "../lib/historyService";
 
 
-/**
- * BACKEND CONTRACT — UNCHANGED FROM OLD DASHBOARD:
- *   1. POST {API_BASE}/upload  (FormData "audio")  -> { fileUrl }
- *   2. analyzeArrayBuffer(arrayBuffer, opts, audioURL)
- *        -> decodes audio, runs YIN pitch + pause detection client-side,
- *           POSTs to /frontend/getVolumeParams, returns:
- *           { geminiAnalysis: { analysis: {...} }, energies }
- *   3. analysisResult fields read: words_per_minute, confidence_score,
- *      filler_word_count, weak_word_count, clarity, repetitive_words,
- *      pause_analysis, transcript, summary_review
- *
- * Only new things: `phase` state drives AnalysisProgress (was a single
- * "Analyzing audio..." string before), and a `history` list + HistoryList
- * component for past analyses (no prior backend endpoint existed for this —
- * see HistoryList.jsx for the expected shape to wire up).
- */
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("transcript");
   const [audioFile, setAudioFile] = useState(null);
@@ -170,7 +152,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#07090f] text-white">
-      <Navbar />
 
       <div
         className="fixed inset-0 pointer-events-none z-0"
@@ -262,7 +243,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 };

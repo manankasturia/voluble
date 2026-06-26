@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import Footer from "./Footer";
 
 const STEPS = [
   {
@@ -404,8 +403,6 @@ export default function Howitworks() {
           </a>
         </div>
       </div>
-
-      <Footer />
 
       <style>{`
         @keyframes pulse-dot {
