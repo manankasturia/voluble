@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-/**
- * Same prop contract and field names as before: analysisResult.{words_per_minute,
- * confidence_score, filler_word_count, weak_word_count, clarity, repetitive_words,
- * pause_analysis}, plus energies[] for the volume meter. Only the visuals changed.
- */
+// analysisResult.{words_per_minute, confidence_score, filler_word_count, weak_word_count, clarity, repetitive_words, pause_analysis},
+// plus energies[] for the volume meter
+
 export default function MetricsTab({ analysisResult, energies }) {
   const [sub, setSub] = useState("fillerWords");
 
@@ -69,8 +67,8 @@ export default function MetricsTab({ analysisResult, energies }) {
             key={t.key}
             onClick={() => setSub(t.key)}
             className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${sub === t.key
-                ? "bg-blue-600 text-white"
-                : "text-white/45 hover:text-white hover:bg-white/[0.05]"
+              ? "bg-blue-600 text-white"
+              : "text-white/45 hover:text-white hover:bg-white/[0.05]"
               }`}
           >
             {t.label}
@@ -207,8 +205,8 @@ function PausesContent({ pauses }) {
             <div
               key={i}
               className={`rounded-xl border-l-2 p-4 transition-colors ${pause.is_awkward
-                  ? "border-red-400/60 bg-red-500/[0.05] hover:bg-red-500/[0.08]"
-                  : "border-emerald-400/60 bg-emerald-500/[0.05] hover:bg-emerald-500/[0.08]"
+                ? "border-red-400/60 bg-red-500/[0.05] hover:bg-red-500/[0.08]"
+                : "border-emerald-400/60 bg-emerald-500/[0.05] hover:bg-emerald-500/[0.08]"
                 }`}
             >
               <div className="flex items-center justify-between mb-1.5">

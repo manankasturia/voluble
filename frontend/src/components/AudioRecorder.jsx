@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { createRecorder } from "./AudioAnalyzer/recordAudioAnalyzer";
 
-/**
- * Dark-themed recorder with a live, mic-reactive waveform — visual language
- * borrowed from the "See the pipeline run" demo in Howitworks.jsx.
- *
- * Backend contract unchanged: onRecorded(blob) fires exactly like the old
- * AudioRecorder.js, still backed by createRecorder() from recordAudioAnalyzer.js.
- */
+
+// Backend contract: onRecorded(blob) fires exactly like the old
+// AudioRecorder.js, still backed by createRecorder() from recordAudioAnalyzer.js.
+
 export default function AudioRecorder({ onRecorded, disabled }) {
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState("");
@@ -151,10 +148,10 @@ export default function AudioRecorder({ onRecorded, disabled }) {
   function cleanupLiveAnalyser() {
     try {
       audioCtxRef.current?._liveStream?.getTracks?.().forEach((t) => t.stop());
-    } catch {}
+    } catch { }
     try {
       audioCtxRef.current?.close?.();
-    } catch {}
+    } catch { }
     audioCtxRef.current = null;
     analyserRef.current = null;
   }
@@ -173,7 +170,7 @@ export default function AudioRecorder({ onRecorded, disabled }) {
       cleanupLiveAnalyser();
       try {
         recorderRef.current?.stop();
-      } catch {}
+      } catch { }
     };
   }, []);
 

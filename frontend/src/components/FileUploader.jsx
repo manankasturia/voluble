@@ -1,13 +1,8 @@
 import { useRef, useState } from "react";
 
-/**
- * Dark dropzone — same interaction model as the reference screenshot
- * (click to upload / drag-drop / "or" / record), restyled to match
- * Volube's dark, blue-accented, grid-bg aesthetic.
- *
- * onFileChange receives a native change-event-shaped object so Dashboard's
- * existing handler (e.target.files[0]) keeps working unmodified.
- */
+// click to upload / drag-drop / "or" / record
+//  onFileChange receives a native change-event-shaped object so Dashboard's
+//  existing handler (e.target.files[0]) keeps working unmodified.
 export default function FileUploader({ onFileChange, disabled }) {
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef(null);

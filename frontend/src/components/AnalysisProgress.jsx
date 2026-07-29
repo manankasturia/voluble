@@ -1,15 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Visual progress while the real pipeline runs:
- *   /upload  ->  decode + YIN pitch/pause extraction (client-side)  ->  /frontend/getVolumeParams (Gemini)
- *
- * This component is purely presentational — Dashboard drives `phase` based on
- * where it actually is in handleFileChange / handleRecording. No timing here
- * is faked; it just reflects real async state with a calmer UI than an alert.
- *
- * phase: "uploading" | "measuring" | "thinking" | null
- */
+// visual progress of pipeline, while waiting
+// phase: "uploading" | "measuring" | "thinking" | null
 const PHASES = [
   { id: "uploading", label: "Uploading audio", sub: "Sending your recording to Volube", color: "#60a5fa" },
   { id: "measuring", label: "Measuring pace & pitch", sub: "Reading pauses, speed, and tone from the waveform", color: "#93c5fd" },
@@ -21,7 +13,7 @@ export default function AnalysisProgress({ phase, fileName }) {
   const animRef = useRef(null);
   const tickRef = useRef(0);
 
-  // Idle ambient waveform so the panel doesn't feel static while we wait
+  // Idle ambient waveform
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;

@@ -1,8 +1,6 @@
-/**
- * Dark-themed playback bar. Same prop contract as before (audioFile, isAnalyzing) —
- * still renders nothing while analyzing or with no file, and still uses the
- * browser's native <audio> element (createObjectURL unchanged) for reliability.
- */
+
+// renders nothing while analyzing or with no file
+// uses the browser's native <audio> element (createObjectURL unchanged)
 export default function AudioPlayer({ audioFile, isAnalyzing }) {
   if (!audioFile || isAnalyzing) return null;
 

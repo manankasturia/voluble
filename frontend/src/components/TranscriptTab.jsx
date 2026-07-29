@@ -1,6 +1,5 @@
-/**
- * Same prop contract: transcript, aiReview (strings from analysisResult).
- */
+
+// transcript, aiReview (strings from analysisResult)
 export default function TranscriptTab({ transcript, aiReview }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

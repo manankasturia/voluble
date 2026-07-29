@@ -1,11 +1,9 @@
 import FileUploader from "./FileUploader";
 import AudioRecorder from "./AudioRecorder";
 
-/**
- * Combines FileUploader + "or" divider + AudioRecorder into one card,
- * mirroring the layout of the reference screenshot (upload dropzone,
- * "or", record button) inside Volube's dark card shell.
- */
+
+// combines FileUploader + "or" divider + AudioRecorder into one card
+
 export default function UploadCard({ onFileChange, onRecorded, disabled }) {
   return (
     <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 md:p-8">
