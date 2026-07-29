@@ -22,7 +22,7 @@ const FEATURES = [
   {
     icon: "📊",
     title: "Confidence score",
-    desc: "Prosody and pacing combined into a single confidence metric — benchmarked against fluent speaker baselines.",
+    desc: "Prosody and pacing combined into a single confidence metric - benchmarked against fluent speaker baselines.",
   },
   {
     icon: "🎯",

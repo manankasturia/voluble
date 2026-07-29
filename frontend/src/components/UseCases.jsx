@@ -19,7 +19,7 @@ const USE_CASES = [
   },
   {
     role: "Language learners",
-    headline: "Fluency isn't just vocabulary — it's rhythm.",
+    headline: "Fluency isn't just vocabulary - it's rhythm.",
     body: "Measure your speaking speed and confidence scores in a new language. Compare against native baselines and watch the gap close.",
     tag: "Learning",
   },

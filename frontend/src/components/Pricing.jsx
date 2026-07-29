@@ -29,7 +29,7 @@ export default function Pricing({ standalone }) {
         </span>
         <h2 className="text-4xl md:text-5xl font-bold text-white">No catch. It's free.</h2>
         <p className="text-white/38 mt-4 max-w-md mx-auto text-sm leading-relaxed">
-          Volube is a hobby project we built to learn and to show what we can do —
+          Volube is a hobby project we built to learn and to show what we can do -
           not a startup with a paywall waiting behind the corner.
         </p>
       </div>
@@ -48,7 +48,7 @@ export default function Pricing({ standalone }) {
               <span className="text-white/38 text-sm mb-1">forever</span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed">
-              Every feature, unlimited, no account tier to upgrade out of —
+              Every feature, unlimited, no account tier to upgrade out of -
               because there isn't one.
             </p>
           </div>
@@ -68,7 +68,7 @@ export default function Pricing({ standalone }) {
             to="/dashboard"
             className="w-full text-center py-3 rounded-full text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-700/28 transition-all"
           >
-            Start analysing — free
+            Start analysing for free
           </Link>
         </div>
 
@@ -78,7 +78,7 @@ export default function Pricing({ standalone }) {
             <h3 className="text-2xl font-bold text-white mb-3">Let's build it together.</h3>
             <p className="text-white/40 text-sm leading-relaxed">
               We're the two people behind Volube. If you've got an idea, a feature
-              this site is missing, or a project you want built from scratch —
+              this site is missing, or a project you want built from scratch -
               just reach out.
             </p>
           </div>

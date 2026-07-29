@@ -8,7 +8,7 @@ const STEPS = [
     techColor: "#60a5fa",
     icon: <MicIcon />,
     headline: "Capture your voice",
-    body: "Record directly in-browser or drop an MP3. The Web Audio API reads the raw waveform in real time — no plugins, no waiting.",
+    body: "Record directly in-browser or drop an MP3. The Web Audio API reads the raw waveform in real time - no plugins, no waiting.",
     metrics: ["Sample rate", "Bit depth", "Waveform amplitude"],
   },
   {
@@ -28,7 +28,7 @@ const STEPS = [
     techColor: "#60a5fa",
     icon: <SpeedIcon />,
     headline: "Pace & prosody",
-    body: "Words-per-minute, pause duration, and speech-to-silence ratio are computed from the audio buffer — separate from the transcript pipeline.",
+    body: "Words-per-minute, pause duration, and speech-to-silence ratio are computed from the audio buffer - separate from the transcript pipeline.",
     metrics: ["WPM", "Pause frequency", "Stammer index"],
   },
   {
@@ -190,7 +190,7 @@ export default function Howitworks() {
             <span className="text-white/35">One coherent picture of your voice.</span>
           </h1>
           <p className="text-white/40 mt-5 max-w-md mx-auto text-sm leading-relaxed">
-            Every analysis runs a coordinated pipeline — audio primitives, AI transcription, and a language model that ties it all together.
+            Every analysis runs a coordinated pipeline: audio primitives, AI transcription, and a language model that ties it all together.
           </p>
         </div>
 
@@ -393,7 +393,7 @@ export default function Howitworks() {
         {/* Bottom CTA */}
         <div className="text-center mt-20">
           <p className="text-white/30 text-sm mb-6">
-            The full pipeline runs on every upload — free to try, no account needed.
+            The full pipeline runs on every upload. Free to try, no account needed.
           </p>
           <a
             href="/dashboard"
